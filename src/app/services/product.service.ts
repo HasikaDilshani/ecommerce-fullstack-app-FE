@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Product } from '../common/product';
 import { ProductCategory } from '../common/product-category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class ProductService {
  
   
   
-  private baseUrl = 'http://localhost:8080/api/products';
-  private categoryUrl = 'http://localhost:8080/api/product-category';
+  private baseUrl = environment.shopApiUrl + '/products';
+  private categoryUrl = environment.shopApiUrl + '/product-category';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -59,6 +60,8 @@ export class ProductService {
 
 const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
 + `&page=${thePage}&size=${thePageSize}`;
+
+console.log(`Getting products from - ${searchUrl}`);
 
 return this.httpClient.get<GetResponseProducts>(searchUrl);
 }
